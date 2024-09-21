@@ -410,16 +410,18 @@ void recursive_render (const struct aiScene *sc, const struct aiNode* nd, float 
 			{
 				int vertexIndex = face->mIndices[i];	// get group index for current index
 				if(mesh->mColors[0] != NULL)
-					Color4f(&mesh->mColors[0][vertexIndex]);
+
+				Color4f(&mesh->mColors[0][vertexIndex]);
+
+				if(mesh->HasTextureCoords(0))		//HasTextureCoords(texture_coordinates_set)
+				{
+					glTexCoord2f(mesh->mTextureCoords[0][vertexIndex].x, mesh->mTextureCoords[0][vertexIndex].y); //mTextureCoords[channel][vertex]
+				}
+
 				if(mesh->mNormals != NULL)
-
-					if(mesh->HasTextureCoords(0))		//HasTextureCoords(texture_coordinates_set)
-					{
-						glTexCoord2f(mesh->mTextureCoords[0][vertexIndex].x, mesh->mTextureCoords[0][vertexIndex].y); //mTextureCoords[channel][vertex]
-					}
-
 					glNormal3fv(&mesh->mNormals[vertexIndex].x);
-					glVertex3fv(&mesh->mVertices[vertexIndex].x);
+
+				glVertex3fv(&mesh->mVertices[vertexIndex].x);
 			}
 
 			glEnd();
