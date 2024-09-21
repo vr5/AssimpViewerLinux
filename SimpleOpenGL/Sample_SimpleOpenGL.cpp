@@ -381,7 +381,7 @@ void recursive_render (const struct aiScene *sc, const struct aiNode* nd, float 
 			glEnable(GL_LIGHTING);
 		}
 
-		if(mesh->mColors[0] != NULL)
+		if(mesh->mColors[0] != NULL && !mesh->HasTextureCoords(0))
 		{
 			glEnable(GL_COLOR_MATERIAL);
 		}
